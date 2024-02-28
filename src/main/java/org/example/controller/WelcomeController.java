@@ -1,6 +1,7 @@
 package org.example.controller;
 import org.example.model.HelloWorld;
 import org.example.repository.HelloWorldRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,6 @@ public class WelcomeController {
     public WelcomeController(HelloWorldRepository repository) {
         this.repository = repository;
     }
-
     @GetMapping("/hello-rest")
     @ResponseBody
     public String helloWorld() {
@@ -59,5 +59,19 @@ public class WelcomeController {
         String string = repository.findStringByLanguage(language);
         model.addAttribute("string", string);
         return "index";
+    }
+
+    @PreAuthorize("hasRole('ROLE_Admin')")
+    @GetMapping("/hello-world")
+    public String adminPage() {
+        return "new_hello_world";
+    }
+
+    @PreAuthorize("hasRole('ROLE_Admin')")
+    @PostMapping("/hello-world")
+    @ResponseBody
+    public HelloWorld create(@ModelAttribute HelloWorld helloWorld) {
+        System.out.println(helloWorld);
+        return repository.save(helloWorld);
     }
 }
