@@ -3,6 +3,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.example.model.HelloWorld;
 import org.example.repository.HelloWorldRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,9 @@ public class WelcomeController {
     private final String MYMEMORY_TRANSLATE_API_URL = "https://api.mymemory.translated.net/get";
 
     private final RestTemplate restTemplate;
+
+    @Autowired
+    private Environment environment;
     private final HelloWorldRepository repository;
 
 
@@ -48,18 +53,22 @@ public class WelcomeController {
 //        return helloWorld.getString();
 //    }
 
-//    @GetMapping("/hello/{language}")
-//    public String helloWorld(@PathVariable("language") String language, Model model) {
-//        String helloWorldString = repository.findStringByLanguage(language);
-//        model.addAttribute(helloWorldString);
-//        return "index";
-//    }
-
     @GetMapping("/hello/{language}")
     public String hello(@PathVariable("language") String language, Model model) {
+        if (environment.acceptsProfiles("myMemory")) {
+            // Call the myMemoryHello endpoint
+            return myMemoryHello(language, model);
+        } else {
+            // Call the repository-based hello endpoint
+            return repositoryHello(language, model);
+        }
+    }
+
+    @GetMapping("/repositoryHello/{language}")
+    public String repositoryHello(@PathVariable("language") String language, Model model) {
         String string = repository.findStringByLanguage(language);
         model.addAttribute("string", string);
-        return "index";
+        return "repository_template";
     }
 
     @GetMapping("/myMemoryHello/{language}")
@@ -80,7 +89,9 @@ public class WelcomeController {
         String translatedText = extractTranslatedText(response);
 
         // Return the translated text
-        return translatedText;
+//        return translatedText;
+        model.addAttribute("string", translatedText);
+        return "my_memory_template";
     }
 
     private String extractTranslatedText(String response) {
