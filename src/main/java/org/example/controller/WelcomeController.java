@@ -53,8 +53,8 @@ public class WelcomeController {
 //        return helloWorld.getString();
 //    }
 
-    @GetMapping("/hello/{language}")
-    public String hello(@PathVariable("language") String language, Model model) {
+    @GetMapping("/switchHello/{language}")
+    public String switchHello(@PathVariable("language") String language, Model model) {
         if (environment.acceptsProfiles("myMemory")) {
             // Call the myMemoryHello endpoint
             return myMemoryHello(language, model);
@@ -64,7 +64,7 @@ public class WelcomeController {
         }
     }
 
-    @GetMapping("/repositoryHello/{language}")
+    @GetMapping("/hello/{language}")
     public String repositoryHello(@PathVariable("language") String language, Model model) {
         String string = repository.findStringByLanguage(language);
         model.addAttribute("string", string);
@@ -88,8 +88,6 @@ public class WelcomeController {
         // Extract translated text from the response
         String translatedText = extractTranslatedText(response);
 
-        // Return the translated text
-//        return translatedText;
         model.addAttribute("string", translatedText);
         return "my_memory_template";
     }
