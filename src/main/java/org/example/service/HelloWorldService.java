@@ -88,6 +88,6 @@ public class HelloWorldService {
     public String secureHello(@PathVariable("language") String language, Model model) {
             String string = repository.findStringByLanguage(language);
             model.addAttribute("string", string);
-            return "index";
+            return "repository_template";
     }
 }

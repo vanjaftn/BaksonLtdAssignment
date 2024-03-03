@@ -47,7 +47,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests().antMatchers("/authenticate")
                 .permitAll().and().authorizeRequests().antMatchers("/hello/**")
                 .permitAll().and().authorizeRequests().antMatchers("/hello-rest")
-                .permitAll().anyRequest().authenticated()
+                .permitAll().
+                and().authorizeRequests().antMatchers("/hello-world").permitAll().
+                and().authorizeRequests().antMatchers("/choose-profile").permitAll().
+                anyRequest().authenticated()
                 .and().exceptionHandling().accessDeniedPage("/403")
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
