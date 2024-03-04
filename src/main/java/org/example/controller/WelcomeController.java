@@ -101,13 +101,13 @@ public class WelcomeController {
         return service.secureHello(language, model);
     }
 
-//    @PreAuthorize("hasRole('ROLE_Admin')")
+    @PreAuthorize("hasRole('ROLE_Admin')")
     @GetMapping("/hello-world")
     public String adminPage() {
         return "new_hello_world";
     }
 
-//    @PreAuthorize("hasRole('ROLE_Admin')")
+    @PreAuthorize("hasRole('ROLE_Admin')")
     @PostMapping("/hello-world")
     @ResponseBody
     public HelloWorld create(@ModelAttribute HelloWorld helloWorld) {

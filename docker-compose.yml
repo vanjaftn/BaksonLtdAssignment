@@ -1,0 +1,27 @@
+version: "3"
+services:
+  backend:
+    build: .
+    restart: always
+    environment:
+      TEST: test
+    ports:
+      - "8081:8013"
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0.32
+    restart: always
+    environment:
+      MYSQL_DATABASE: "bakson"
+      MYSQL_ROOT_PASSWORD: "root"
+    ports:
+      - "3307:3306"
+    expose:
+      - "3307"
+    volumes:
+      - my-db:/var/lib/mysql
+
+volumes:
+  my-db:

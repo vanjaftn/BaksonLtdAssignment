@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().and().authorizeRequests().antMatchers("/hello/**")
                 .permitAll().and().authorizeRequests().antMatchers("/hello-rest")
                 .permitAll().
-                and().authorizeRequests().antMatchers("/hello-world").permitAll().
+//                and().authorizeRequests().antMatchers("/hello-world").permitAll().
                 and().authorizeRequests().antMatchers("/choose-profile").permitAll().
                 anyRequest().authenticated()
                 .and().exceptionHandling().accessDeniedPage("/403")
