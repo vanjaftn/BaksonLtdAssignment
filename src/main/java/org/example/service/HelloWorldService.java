@@ -31,8 +31,9 @@ public class HelloWorldService {
         this.restTemplate = restTemplate;
     }
 
-    public HelloWorld create(@ModelAttribute HelloWorld helloWorld) {
-        return repository.save(helloWorld);
+    public String create(@ModelAttribute HelloWorld helloWorld) {
+        repository.save(helloWorld);
+        return "Created: " + helloWorld.getLanguage() + " " + helloWorld.getString();
     }
 
     public List<HelloWorld> getAll() {

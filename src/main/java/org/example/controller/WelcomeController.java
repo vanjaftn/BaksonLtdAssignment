@@ -85,12 +85,12 @@ public class WelcomeController {
         return service.switchHello(language, model);
     }
 
-    @GetMapping("/hello/language")
+    @GetMapping("api/db/hello/language")
     public String repositoryHello(@RequestParam String language, Model model) {
         return service.repositoryHello(language, model);
     }
 
-    @GetMapping("/my-memory-hello/language")
+    @GetMapping("/api/external/hello/language")
 //    @ResponseBody
     public String myMemoryHello(@RequestParam String language, Model model) {
         return service.myMemoryHello(language, model);
@@ -110,7 +110,7 @@ public class WelcomeController {
     @PreAuthorize("hasRole('ROLE_Admin')")
     @PostMapping("/hello-world")
     @ResponseBody
-    public HelloWorld create(@ModelAttribute HelloWorld helloWorld) {
+    public String create(@ModelAttribute HelloWorld helloWorld) {
         return service.create(helloWorld);
     }
 }

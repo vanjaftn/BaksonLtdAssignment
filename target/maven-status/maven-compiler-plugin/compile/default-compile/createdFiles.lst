@@ -3,6 +3,7 @@ org\example\config\EndpointConfiguration.class
 org\example\controller\WelcomeController.class
 org\example\repository\HelloWorldRepository.class
 org\example\model\AuthRequest.class
+org\example\model\RequestResponseLoggingInterceptor.class
 org\example\repository\UserRepository.class
 org\example\App.class
 org\example\service\UserService.class
